@@ -76,4 +76,5 @@ dependencies {
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.coroutines.android)
     implementation(libs.coil)
+    implementation(libs.room.paging)
 }

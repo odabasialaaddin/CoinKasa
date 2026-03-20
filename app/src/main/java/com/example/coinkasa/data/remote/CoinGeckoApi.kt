@@ -2,6 +2,7 @@ package com.example.coinkasa.data.remote
 
 import com.example.coinkasa.BuildConfig
 import com.example.coinkasa.data.remote.dto.CoinDto
+import com.example.coinkasa.data.remote.dto.SearchResponseDto
 import com.example.coinkasa.util.Constants
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,4 +16,10 @@ interface CoinGeckoApi {
         @Query("page") page: Int = Constants.STARTING_PAGE_INDEX,
         @Query("x_cg_demo_api_key") apiKey: String = BuildConfig.API_KEY
     ): List<CoinDto>
+
+    @GET("api/v3/search")
+    suspend fun searchCoins(
+        @Query("query") query: String,
+        @Query("x_cg_demo_api_key") apiKey: String = BuildConfig.API_KEY
+    ): SearchResponseDto
 }

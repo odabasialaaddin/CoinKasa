@@ -58,6 +58,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -77,4 +79,6 @@ dependencies {
     implementation(libs.coroutines.android)
     implementation(libs.coil)
     implementation(libs.room.paging)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.swiperefreshlayout)
 }

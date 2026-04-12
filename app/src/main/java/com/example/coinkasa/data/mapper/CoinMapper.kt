@@ -12,7 +12,20 @@ fun CoinDto.toCoin(): Coin {
         name = name ?: "",
         currentPrice = currentPrice ?: 0.0,
         priceChangePercentage24h = priceChangePercentage24h ?: 0.0,
-        imageUrl = image ?: ""
+        imageUrl = image ?: "",
+        marketCapRank = marketCapRank ?: 0
+    )
+}
+
+fun CoinDto.toCoinEntity(): CoinEntity {
+    return CoinEntity(
+        id = id ?: "",
+        symbol = symbol ?: "",
+        name = name ?: "",
+        currentPrice = currentPrice ?: 0.0,
+        priceChangePercentage24h = priceChangePercentage24h ?: 0.0,
+        imageUrl = image ?: "",
+        marketCapRank = marketCapRank ?: 0
     )
 }
 
@@ -23,7 +36,8 @@ fun CoinEntity.toCoin(): Coin {
         name = name,
         currentPrice = currentPrice,
         priceChangePercentage24h = priceChangePercentage24h,
-        imageUrl = imageUrl
+        imageUrl = imageUrl,
+        marketCapRank = marketCapRank
     )
 }
 
@@ -34,6 +48,7 @@ fun SearchCoinDto.toCoin(): Coin {
         name = name ?: "",
         currentPrice = 0.0,
         priceChangePercentage24h = 0.0,
-        imageUrl = image ?: ""
+        imageUrl = image ?: "",
+        marketCapRank = marketCapRank ?: 0
     )
 }

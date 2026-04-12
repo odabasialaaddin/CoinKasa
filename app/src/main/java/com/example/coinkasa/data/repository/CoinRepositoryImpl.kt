@@ -34,7 +34,10 @@ class CoinRepositoryImpl(
         return Pager(
             config = PagingConfig(
                 pageSize = Constants.ITEMS_PER_PAGE,
-                prefetchDistance = Constants.PREFETCH_DISTANCE
+                prefetchDistance = Constants.PREFETCH_DISTANCE,
+                initialLoadSize = Constants.INITIAL_LOAD_SIZE,
+                enablePlaceholders = true,
+                maxSize = Constants.MAX_SIZE
             ),
             remoteMediator = CoinRemoteMediator(
                 api = api,

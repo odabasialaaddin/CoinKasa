@@ -11,5 +11,6 @@ data class CoinEntity(
     val name: String,
     val currentPrice: Double,
     val priceChangePercentage24h: Double,
-    val imageUrl: String
+    val imageUrl: String,
+    val marketCapRank: Int
 )

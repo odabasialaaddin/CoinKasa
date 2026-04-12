@@ -18,5 +18,7 @@ data class SearchCoinDto(
     @Json(name = "name")
     val name: String?,
     @Json(name = "large")
-    val image: String?
+    val image: String?,
+    @Json(name = "market_cap_rank")
+    val marketCapRank: Int?
 )

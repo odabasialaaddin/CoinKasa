@@ -135,7 +135,6 @@ class CoinListFragment : BaseFragment<FragmentCoinListBinding, CoinListViewModel
 
         binding.fabScrollToTop.setOnClickListener {
             binding.rvCoins.scrollToPosition(0)
-            coinPagingAdapter?.refresh()
             binding.fabScrollToTop.hide()
         }
     }

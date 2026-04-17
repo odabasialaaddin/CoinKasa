@@ -7,10 +7,12 @@ import androidx.room.PrimaryKey
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
     val transactionId: Int = 0,
-
     val coinId: String,
+    val coinName: String,
+    val coinSymbol: String,
     val transactionType: String,
-    val amount: Double,
-    val pricePerCoin: Double,
+    val exchangeName: String,
+    val amount: String,
+    val pricePerCoin: String,
     val dateMillis: Long
 )

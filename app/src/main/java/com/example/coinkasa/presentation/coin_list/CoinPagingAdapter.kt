@@ -56,7 +56,7 @@ class CoinPagingAdapter(
                     crossfade(true)
                 }
 
-                root.setOnClickListener {
+                ivAddPortfolio.setOnClickListener {
                     onItemClick(coin)
                 }
             }

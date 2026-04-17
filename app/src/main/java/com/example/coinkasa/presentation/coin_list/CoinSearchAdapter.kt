@@ -53,7 +53,7 @@ class CoinSearchAdapter(
                     crossfade(true)
                 }
 
-                root.setOnClickListener {
+                ivAddPortfolio.setOnClickListener {
                     onItemClick(coin)
                 }
             }

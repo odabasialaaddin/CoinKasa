@@ -1,6 +1,8 @@
 package com.example.coinkasa.domain.use_case
 
-data class CoinUseCases(
+import javax.inject.Inject
+
+data class CoinUseCases @Inject constructor(
     val getCoins: GetCoinsUseCase,
     val searchCoins: SearchCoinsUseCase,
     val insertTransaction: InsertTransactionUseCase,

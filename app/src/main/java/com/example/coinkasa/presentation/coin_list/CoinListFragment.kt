@@ -14,6 +14,7 @@ import com.example.coinkasa.core.base.BaseFragment
 import com.example.coinkasa.core.delegate.viewBinding
 import com.example.coinkasa.core.state.UiState
 import com.example.coinkasa.databinding.FragmentCoinListBinding
+import com.example.coinkasa.presentation.add_transaction.AddTransactionBottomSheetFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -39,11 +40,20 @@ class CoinListFragment : BaseFragment<FragmentCoinListBinding, CoinListViewModel
 
     private fun createAdapters() {
         coinPagingAdapter = CoinPagingAdapter { coin ->
-            showToast("${coin.name} tıklandı!")
+            openAddTransactionSheet(coin.id, coin.name, coin.symbol)
         }
         coinSearchAdapter = CoinSearchAdapter { coin ->
-            showToast("${coin.name} tıklandı!")
+            openAddTransactionSheet(coin.id, coin.name, coin.symbol)
         }
+    }
+
+    private fun openAddTransactionSheet(id: String, name: String, symbol: String) {
+        val bottomSheet = AddTransactionBottomSheetFragment.newInstance(
+            coinId = id,
+            coinName = name,
+            coinSymbol = symbol
+        )
+        bottomSheet.show(childFragmentManager, "AddTransactionBottomSheet")
     }
 
     private fun setupRecyclerViews() {
@@ -121,7 +131,6 @@ class CoinListFragment : BaseFragment<FragmentCoinListBinding, CoinListViewModel
         binding.rvCoins.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
 

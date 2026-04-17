@@ -2,47 +2,59 @@ package com.example.coinkasa.domain.use_case
 
 import com.example.coinkasa.data.local.entity.TransactionEntity
 import com.example.coinkasa.domain.model.ProfitLossResult
+import java.math.BigDecimal
+import java.math.RoundingMode
 import javax.inject.Inject
 
 class CalculateProfitLossUseCase @Inject constructor() {
 
     operator fun invoke(transactions: List<TransactionEntity>, currentCoinPrice: Double): ProfitLossResult {
-        var totalBuyAmount = 0.0
-        var totalSpent = 0.0
-        var totalSellAmount = 0.0
+        var totalBuyAmount = BigDecimal.ZERO
+        var totalSpent = BigDecimal.ZERO
+        var totalSellAmount = BigDecimal.ZERO
 
         for (transaction in transactions) {
+            val amount = transaction.amount.toBigDecimalOrNull() ?: BigDecimal.ZERO
+            val price = transaction.pricePerCoin.toBigDecimalOrNull() ?: BigDecimal.ZERO
+
             if (transaction.transactionType == "BUY") {
-                totalBuyAmount += transaction.amount
-                totalSpent += (transaction.amount * transaction.pricePerCoin)
+                totalBuyAmount += amount
+                totalSpent += (amount * price)
             } else if (transaction.transactionType == "SELL") {
-                totalSellAmount += transaction.amount
+                totalSellAmount += amount
             }
         }
 
         val currentHoldings = totalBuyAmount - totalSellAmount
 
-        if (currentHoldings <= 0.0) {
+        if (currentHoldings <= BigDecimal.ZERO) {
             return ProfitLossResult(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
         }
 
-        val averageBuyPrice = totalSpent / totalBuyAmount
-        val totalCostBasis = currentHoldings * averageBuyPrice
-        val currentValue = currentHoldings * currentCoinPrice
-        val profitLoss = currentValue - totalCostBasis
-        val profitLossPercentage = if (totalCostBasis > 0) {
-            (profitLoss / totalCostBasis) * 100
+        val averageBuyPrice = if (totalBuyAmount > BigDecimal.ZERO) {
+            totalSpent.divide(totalBuyAmount, 8, RoundingMode.HALF_UP)
         } else {
-            0.0
+            BigDecimal.ZERO
+        }
+
+        val totalCostBasis = currentHoldings * averageBuyPrice
+        val currentPriceBd = BigDecimal.valueOf(currentCoinPrice)
+        val currentValue = currentHoldings * currentPriceBd
+        val profitLoss = currentValue - totalCostBasis
+
+        val profitLossPercentage = if (totalCostBasis > BigDecimal.ZERO) {
+            (profitLoss.divide(totalCostBasis, 8, RoundingMode.HALF_UP)) * BigDecimal("100")
+        } else {
+            BigDecimal.ZERO
         }
 
         return ProfitLossResult(
-            totalAmount = currentHoldings,
-            averageCost = averageBuyPrice,
-            totalInvestment = totalCostBasis,
-            currentValue = currentValue,
-            profitLoss = profitLoss,
-            profitLossPercentage = profitLossPercentage
+            totalAmount = currentHoldings.toDouble(),
+            averageCost = averageBuyPrice.toDouble(),
+            totalInvestment = totalCostBasis.toDouble(),
+            currentValue = currentValue.toDouble(),
+            profitLoss = profitLoss.toDouble(),
+            profitLossPercentage = profitLossPercentage.toDouble()
         )
     }
 }

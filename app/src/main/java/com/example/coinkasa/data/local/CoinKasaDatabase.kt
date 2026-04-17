@@ -11,7 +11,7 @@ import com.example.coinkasa.data.local.entity.TransactionEntity
 
 @Database(
     entities = [CoinEntity::class, TransactionEntity::class, RemoteKeyEntity::class],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 abstract class CoinKasaDatabase : RoomDatabase() {

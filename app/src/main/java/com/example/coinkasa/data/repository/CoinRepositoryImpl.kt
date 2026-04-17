@@ -6,8 +6,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.example.coinkasa.data.local.CoinKasaDatabase
-import com.example.coinkasa.data.local.dao.TransactionDao
-import com.example.coinkasa.data.local.entity.TransactionEntity
 import com.example.coinkasa.data.mapper.toCoin
 import com.example.coinkasa.data.remote.CoinGeckoApi
 import com.example.coinkasa.data.remote.CoinRemoteMediator
@@ -23,8 +21,7 @@ import java.io.IOException
 
 class CoinRepositoryImpl(
     private val api: CoinGeckoApi,
-    private val db: CoinKasaDatabase,
-    private val transactionDao: TransactionDao
+    private val db: CoinKasaDatabase
 ) : CoinRepository {
 
     private val coinDao = db.coinDao
@@ -51,22 +48,6 @@ class CoinRepositoryImpl(
                 entity.toCoin()
             }
         }
-    }
-
-    override fun getAllTransactions(): Flow<List<TransactionEntity>> {
-        return transactionDao.getAllTransactions()
-    }
-
-    override fun getTransactionsByCoinId(coinId: String): Flow<List<TransactionEntity>> {
-        return transactionDao.getTransactionsByCoinId(coinId)
-    }
-
-    override suspend fun insertTransaction(transaction: TransactionEntity) {
-        transactionDao.insertTransaction(transaction)
-    }
-
-    override suspend fun deleteTransaction(transaction: TransactionEntity) {
-        transactionDao.deleteTransaction(transaction)
     }
 
     override fun searchCoins(query: String): Flow<Resource<List<Coin>>> = flow {

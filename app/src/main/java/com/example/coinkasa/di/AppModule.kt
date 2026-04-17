@@ -3,17 +3,10 @@ package com.example.coinkasa.di
 import android.app.Application
 import androidx.room.Room
 import com.example.coinkasa.data.local.CoinKasaDatabase
+import com.example.coinkasa.data.local.dao.TransactionDao
 import com.example.coinkasa.data.remote.CoinGeckoApi
 import com.example.coinkasa.data.repository.CoinRepositoryImpl
 import com.example.coinkasa.domain.repository.CoinRepository
-import com.example.coinkasa.domain.use_case.CalculateProfitLossUseCase
-import com.example.coinkasa.domain.use_case.CoinUseCases
-import com.example.coinkasa.domain.use_case.DeleteTransactionUseCase
-import com.example.coinkasa.domain.use_case.GetCoinsUseCase
-import com.example.coinkasa.domain.use_case.GetTransactionsByCoinIdUseCase
-import com.example.coinkasa.domain.use_case.GetTransactionsUseCase
-import com.example.coinkasa.domain.use_case.InsertTransactionUseCase
-import com.example.coinkasa.domain.use_case.SearchCoinsUseCase
 import com.example.coinkasa.util.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -54,7 +47,13 @@ object AppModule {
             app,
             CoinKasaDatabase::class.java,
             "coin_kasa_db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTransactionDao(db: CoinKasaDatabase): TransactionDao {
+        return db.transactionDao
     }
 
     @Provides
@@ -65,22 +64,7 @@ object AppModule {
     ): CoinRepository {
         return CoinRepositoryImpl(
             api = api,
-            db = db,
-            transactionDao = db.transactionDao
-        )
-    }
-
-    @Provides
-    @Singleton
-    fun provideCoinUseCases(repository: CoinRepository): CoinUseCases {
-        return CoinUseCases(
-            getCoins = GetCoinsUseCase(repository),
-            searchCoins = SearchCoinsUseCase(repository),
-            insertTransaction = InsertTransactionUseCase(repository),
-            deleteTransaction = DeleteTransactionUseCase(repository),
-            getTransactions = GetTransactionsUseCase(repository),
-            getTransactionsByCoinId = GetTransactionsByCoinIdUseCase(repository),
-            calculateProfitLoss = CalculateProfitLossUseCase()
+            db = db
         )
     }
 }

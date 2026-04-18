@@ -64,9 +64,16 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupUI()
         setupDateInitialValue()
         setupListeners()
         observeUiEvents()
+    }
+
+    private fun setupUI() {
+        if (coinName.isNotEmpty()) {
+            binding.tvTitle.text = "$coinName İşlemi Ekle"
+        }
     }
 
     private fun setupDateInitialValue() {
@@ -108,7 +115,7 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun updateDateText(millis: Long) {
-        val localeTr = Locale.Builder().setLanguage("tr").setRegion("TR").build()
+        val localeTr = Locale.forLanguageTag("tr-TR")
         val formatter = SimpleDateFormat("dd MMMM yyyy", localeTr)
         binding.tvDate.text = formatter.format(Calendar.getInstance().apply { timeInMillis = millis }.time)
     }

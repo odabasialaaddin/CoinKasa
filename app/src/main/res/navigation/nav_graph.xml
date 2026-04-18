@@ -11,4 +11,10 @@
         android:label="Coin Listesi"
         tools:layout="@layout/fragment_coin_list" />
 
+    <fragment
+        android:id="@+id/portfolioFragment"
+        android:name="com.example.coinkasa.presentation.portfolio.PortfolioFragment"
+        android:label="Portföyüm"
+        tools:layout="@layout/fragment_portfolio" />
+
 </navigation>

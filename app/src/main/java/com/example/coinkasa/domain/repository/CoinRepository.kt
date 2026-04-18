@@ -10,4 +10,6 @@ interface CoinRepository {
     fun getCoins(): Flow<PagingData<Coin>>
 
     fun searchCoins(query: String): Flow<Resource<List<Coin>>>
+
+    fun getCoinsByIds(ids: String): Flow<Resource<List<Coin>>>
 }

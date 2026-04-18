@@ -62,4 +62,17 @@ class CoinRepositoryImpl(
             emit(Resource.Error("Lütfen internet bağlantınızı kontrol edin"))
         }
     }
+
+    override fun getCoinsByIds(ids: String): Flow<Resource<List<Coin>>> = flow {
+        try {
+            emit(Resource.Loading())
+            val response = api.getCoinsByIds(ids = ids)
+            val coins = response.map { it.toCoin() }
+            emit(Resource.Success(coins))
+        } catch (e: HttpException) {
+            emit(Resource.Error(e.localizedMessage ?: "Beklenmeyen bir hata oluştu"))
+        } catch (e: IOException) {
+            emit(Resource.Error("Lütfen internet bağlantınızı kontrol edin"))
+        }
+    }
 }

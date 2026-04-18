@@ -22,4 +22,11 @@ interface CoinGeckoApi {
         @Query("query") query: String,
         @Query("x_cg_demo_api_key") apiKey: String = BuildConfig.API_KEY
     ): SearchResponseDto
+
+    @GET("api/v3/coins/markets")
+    suspend fun getCoinsByIds(
+        @Query("vs_currency") currency: String = Constants.DEFAULT_CURRENCY,
+        @Query("ids") ids: String, // Örn: "bitcoin,ethereum,solana"
+        @Query("x_cg_demo_api_key") apiKey: String = BuildConfig.API_KEY
+    ): List<CoinDto>
 }

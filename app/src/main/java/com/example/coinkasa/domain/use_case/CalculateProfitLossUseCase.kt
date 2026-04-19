@@ -14,8 +14,11 @@ class CalculateProfitLossUseCase @Inject constructor() {
         var totalSellAmount = BigDecimal.ZERO
 
         for (transaction in transactions) {
-            val amount = transaction.amount.toBigDecimalOrNull() ?: BigDecimal.ZERO
-            val price = transaction.pricePerCoin.toBigDecimalOrNull() ?: BigDecimal.ZERO
+            val amountStr = transaction.amount.replace(",", ".")
+            val priceStr = transaction.pricePerCoin.replace(",", ".")
+
+            val amount = amountStr.toBigDecimalOrNull() ?: BigDecimal.ZERO
+            val price = priceStr.toBigDecimalOrNull() ?: BigDecimal.ZERO
 
             if (transaction.transactionType == "BUY") {
                 totalBuyAmount += amount

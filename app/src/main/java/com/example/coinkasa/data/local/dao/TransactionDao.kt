@@ -22,4 +22,7 @@ interface TransactionDao {
 
     @Query("SELECT * FROM transaction_table WHERE coinId = :coinId ORDER BY dateMillis DESC")
     fun getTransactionsByCoinId(coinId: String): Flow<List<TransactionEntity>>
+
+    @Query("DELETE FROM transaction_table WHERE coinId = :coinId")
+    suspend fun deleteTransactionsByCoinId(coinId: String)
 }

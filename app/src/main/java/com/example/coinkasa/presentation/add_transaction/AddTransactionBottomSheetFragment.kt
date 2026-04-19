@@ -30,13 +30,15 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
     private var coinId: String = ""
     private var coinName: String = ""
     private var coinSymbol: String = ""
+    private var isFromPortfolio: Boolean = false
 
     companion object {
-        fun newInstance(coinId: String, coinName: String, coinSymbol: String): AddTransactionBottomSheetFragment {
+        fun newInstance(coinId: String, coinName: String, coinSymbol: String, isFromPortfolio: Boolean = false): AddTransactionBottomSheetFragment {
             val args = Bundle().apply {
                 putString("coinId", coinId)
                 putString("coinName", coinName)
                 putString("coinSymbol", coinSymbol)
+                putBoolean("isFromPortfolio", isFromPortfolio)
             }
             val fragment = AddTransactionBottomSheetFragment()
             fragment.arguments = args
@@ -50,6 +52,7 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
             coinId = it.getString("coinId", "")
             coinName = it.getString("coinName", "")
             coinSymbol = it.getString("coinSymbol", "")
+            isFromPortfolio = it.getBoolean("isFromPortfolio", false)
         }
     }
 
@@ -74,6 +77,10 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
         if (coinName.isNotEmpty()) {
             binding.tvTitle.text = "$coinName İşlemi Ekle"
         }
+
+        if (!isFromPortfolio) {
+            binding.btnBuy.isChecked = true
+        }
     }
 
     private fun setupDateInitialValue() {
@@ -81,6 +88,13 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun setupListeners() {
+        if (!isFromPortfolio) {
+            binding.btnSell.setOnClickListener {
+                binding.btnBuy.isChecked = true
+                Toast.makeText(requireContext(), "Satış işlemi yalnızca portföy ekranından yapılabilir.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         binding.tvDate.setOnClickListener {
             showDatePicker()
         }

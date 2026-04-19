@@ -6,6 +6,7 @@ data class PortfolioItem(
     val coinSymbol: String,
     val imageUrl: String,
     val amount: Double,
+    val averageCost: Double,
     val currentPrice: Double,
     val totalValue: Double,
     val profitLoss: Double,

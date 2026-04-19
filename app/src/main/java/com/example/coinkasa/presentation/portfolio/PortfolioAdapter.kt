@@ -41,20 +41,28 @@ class PortfolioAdapter(
 
                 tvHoldingsValue.text = String.format(Locale.US, "$%.2f", item.totalValue)
 
-                val profitLossSign = if (item.profitLoss >= 0) "+" else ""
+                // Kar/Zarar Mantığı ve Etiketi (Ahmet Amca Dostu)
+                val isProfit = item.profitLoss >= 0
+                val profitLossSign = if (isProfit) "+" else ""
+                val prefixLabel = if (isProfit) "Net Kar:" else "Net Zarar:"
+
                 val profitLossText = String.format(
                     Locale.US,
-                    "%s$%.2f (%s%.2f%%)",
+                    "%s %s$%.2f (%s%.2f%%)",
+                    prefixLabel,
                     profitLossSign, item.profitLoss,
                     profitLossSign, item.profitLossPercentage
                 )
                 tvProfitLoss.text = profitLossText
 
-                if (item.profitLoss >= 0) {
+                if (isProfit) {
                     tvProfitLoss.setTextColor(Color.parseColor("#00C853"))
                 } else {
                     tvProfitLoss.setTextColor(Color.parseColor("#D50000"))
                 }
+
+                tvAvgCost.text = String.format(Locale.US, "$%.2f", item.averageCost)
+                tvCurrentPrice.text = String.format(Locale.US, "$%.2f", item.currentPrice)
 
                 ivCoinLogo.load(item.imageUrl) {
                     crossfade(true)

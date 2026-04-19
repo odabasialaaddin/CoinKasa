@@ -25,4 +25,8 @@ class TransactionRepositoryImpl @Inject constructor(
     override fun getTransactionsByCoinId(coinId: String): Flow<List<TransactionEntity>> {
         return transactionDao.getTransactionsByCoinId(coinId)
     }
+
+    override suspend fun deleteTransactionsByCoinId(coinId: String) {
+        transactionDao.deleteTransactionsByCoinId(coinId)
+    }
 }

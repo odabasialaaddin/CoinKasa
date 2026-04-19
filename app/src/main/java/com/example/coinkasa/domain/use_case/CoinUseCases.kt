@@ -7,6 +7,7 @@ data class CoinUseCases @Inject constructor(
     val searchCoins: SearchCoinsUseCase,
     val insertTransaction: InsertTransactionUseCase,
     val deleteTransaction: DeleteTransactionUseCase,
+    val deleteTransactionsByCoinId: DeleteTransactionsByCoinIdUseCase,
     val getTransactions: GetTransactionsUseCase,
     val getTransactionsByCoinId: GetTransactionsByCoinIdUseCase,
     val calculateProfitLoss: CalculateProfitLossUseCase,

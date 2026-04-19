@@ -54,16 +54,23 @@
         android:background="?attr/colorOutlineVariant"
         app:layout_constraintTop_toBottomOf="@id/tvTotalProfitLoss" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPortfolio"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingTop="8dp"
-        android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider"
-        tools:listitem="@layout/item_portfolio" />
+        app:layout_constraintTop_toBottomOf="@id/divider">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPortfolio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
+            tools:listitem="@layout/item_portfolio" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
